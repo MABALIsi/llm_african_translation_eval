@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Evaluation LLM</title>
+<style>
+body{font-family:Arial,sans-serif;max-width:900px;margin:40px auto;padding:20px;background:#f5f5f5}
+.card{background:white;padding:30px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.1);margin:20px 0}
+h1{color:#2c3e50;text-align:center}
+.stats{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+.stat{background:#3498db;color:white;padding:20px 30px;border-radius:8px;text-align:center}
+.stat h2{margin:0;font-size:2em}
+.stat p{margin:5px 0 0;font-size:0.9em}
+.btn{display:block;width:220px;background:#27ae60;color:white;padding:15px 40px;border-radius:8px;text-decoration:none;font-size:1.1em;margin:15px auto;text-align:center}
+.btn2{background:#8e44ad}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🌍 Evaluation des Traductions LLM</h1>
+<p style="text-align:center;color:#666">Lingala et Bambara</p>
+<div class="stats">
+<div class="stat"><h2>{{ stats.total_sentences }}</h2><p>Phrases a noter</p></div>
+<div class="stat" style="background:#e74c3c"><h2>{{ stats.total_annotated }}</h2><p>Annotees</p></div>
+<div class="stat" style="background:#8e44ad"><h2>{{ stats.lingala }}</h2><p>Lingala</p></div>
+<div class="stat" style="background:#e67e22"><h2>{{ stats.bambara }}</h2><p>Bambara</p></div>
+</div>
+<a href="/annotate/0" class="btn">▶ Commencer annotation</a>
+<a href="/results" class="btn btn2">📊 Voir resultats</a>
+</div>
+</body>
+</html>

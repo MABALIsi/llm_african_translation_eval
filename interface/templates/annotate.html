@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Annotation {{ idx+1 }}/{{ total }}</title>
+<style>
+body{font-family:Arial,sans-serif;max-width:1000px;margin:30px auto;padding:20px;background:#f5f5f5}
+.card{background:white;padding:25px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.1);margin:15px 0}
+.source{background:#eaf4fb;padding:15px;border-radius:8px;border-left:4px solid #3498db;font-size:1.1em}
+.translation{background:#f9f9f9;padding:15px;border-radius:8px;margin:10px 0;border-left:4px solid #27ae60}
+.model-tag{background:#3498db;color:white;padding:3px 10px;border-radius:20px;font-size:0.8em}
+.rating{display:flex;gap:10px;align-items:center;margin:10px 0;flex-wrap:wrap}
+.stars button{background:none;border:none;font-size:1.8em;cursor:pointer;color:#ccc;padding:0}
+.stars button.active{color:#f39c12}
+.nav{display:flex;justify-content:space-between;margin:20px 0}
+.btn{padding:10px 25px;border-radius:6px;border:none;cursor:pointer;font-size:1em;text-decoration:none;color:white}
+.btn-green{background:#27ae60}
+.btn-gray{background:#95a5a6}
+.btn-save{background:#e67e22;padding:8px 20px;border-radius:6px;border:none;cursor:pointer;color:white;font-size:0.95em;margin-top:10px}
+.progress{background:#ecf0f1;border-radius:10px;height:8px;margin:10px 0}
+.progress-bar{background:#27ae60;height:8px;border-radius:10px}
+.saved{color:#27ae60;font-weight:bold;display:none;margin-left:10px}
+</style>
+</head>
+<body>
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<h3>Phrase {{ idx+1 }} / {{ total }}</h3>
+<span style="padding:3px 12px;border-radius:20px;font-size:0.85em;font-weight:bold;
+{% if sentence.target_lang=='lin' %}background:#d5f5e3;color:#1e8449
+{% else %}background:#fdebd0;color:#a04000{% endif %}">
+{% if sentence.target_lang=='lin' %}Lingala{% else %}Bambara{% endif %}
+</span>
+</div>
+<div class="progress">
+<div class="progress-bar" style="width:{{ (idx/total*100)|round }}%"></div>
+</div>
+<p><strong>Domaine :</strong> {{ sentence.domain }}</p>
+<div class="source"><strong>Phrase source :</strong><br>{{ sentence.source_text }}</div>
+</div>
+
+{% for t in sentence.translations %}
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<span class="model-tag">{{ t.model }}</span>
+<span style="color:#666;font-size:0.85em">{{ t.strategy }}</span>
+</div>
+<div class="translation"><strong>Traduction :</strong> {{ t.hypothesis }}</div>
+<div class="rating">
+<strong>Adequation :</strong>
+<div class="stars">
+{% for i in range(1,6) %}
+<button onclick="setScore('adeq',{{ loop.index }},{{ i }})" id="adeq_{{ loop.index }}_{{ i }}">&#9733;</button>
+{% endfor %}
+</div>
+<span id="adeq_val_{{ loop.index }}" style="color:#999">(1=mauvais 5=excellent)</span>
+</div>
+<div class="rating">
+<strong>Fluidite :</strong>
+<div class="stars">
+{% for i in range(1,6) %}
+<button onclick="setScore('flu',{{ loop.index }},{{ i }})" id="flu_{{ loop.index }}_{{ i }}">&#9733;</button>
+{% endfor %}
+</div>
+<span id="flu_val_{{ loop.index }}" style="color:#999">(1=mauvais 5=excellent)</span>
+</div>
+<button class="btn-save" onclick="saveAnnotation({{ loop.index }},'{{ t.model }}','{{ t.strategy }}')">
+💾 Sauvegarder cette note
+</button>
+<span class="saved" id="saved_{{ loop.index }}">✅ Sauvegarde !</span>
+</div>
+{% endfor %}
+
+<div class="nav">
+<a href="/annotate/{{ prev_idx }}" class="btn btn-gray">← Precedent</a>
+<a href="/" class="btn" style="background:#8e44ad">🏠 Accueil</a>
+<a href="/annotate/{{ next_idx }}" class="btn btn-green">Suivant →</a>
+</div>
+
+<script>
+const scores={};
+function setScore(type,idx,val){
+    scores[type+'_'+idx]=val;
+    for(let i=1;i<=5;i++)
+        document.getElementById(type+'_'+idx+'_'+i).classList.toggle('active',i<=val);
+    document.getElementById(type+'_val_'+idx).textContent=val+'/5';
+}
+function saveAnnotation(idx,model,strategy){
+    const adeq=scores['adeq_'+idx]||0;
+    const flu=scores['flu_'+idx]||0;
+    if(!adeq||!flu){alert('Notez adequation ET fluidite !');return;}
+    fetch('/submit',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+            sentence_id:'{{ sentence.id }}',
+            source_text:'{{ sentence.source_text|replace("'","") }}',
+            target_lang:'{{ sentence.target_lang }}',
+            model:model,strategy:strategy,
+            adequacy:adeq,fluency:flu
+        })
+    }).then(()=>{
+        const m=document.getElementById('saved_'+idx);
+        m.style.display='inline';
+        setTimeout(()=>m.style.display='none',2000);
+    });
+}
+</script>
+</body>
+</html>
