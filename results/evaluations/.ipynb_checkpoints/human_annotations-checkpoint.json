@@ -1,0 +1,11 @@
+{
+  "LIN_0000_llama3-8b_zero_shot": {
+    "sentence_id": "LIN_0000",
+    "source_text": "Le médecin examine le patient chaque matin.",
+    "target_lang": "lin",
+    "model": "llama3-8b",
+    "strategy": "zero_shot",
+    "adequacy": 1,
+    "fluency": 1
+  }
+}

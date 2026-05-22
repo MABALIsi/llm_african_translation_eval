@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Resultats</title>
+<style>
+body{font-family:Arial,sans-serif;max-width:900px;margin:40px auto;padding:20px;background:#f5f5f5}
+.card{background:white;padding:25px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.1);margin:15px 0}
+table{width:100%;border-collapse:collapse}
+th{background:#2c3e50;color:white;padding:12px;text-align:center}
+td{padding:10px;border-bottom:1px solid #ecf0f1;text-align:center}
+tr:hover{background:#f8f9fa}
+.high{color:#27ae60;font-weight:bold}
+.low{color:#e74c3c}
+h1{color:#2c3e50;text-align:center}
+.btn{display:inline-block;background:#3498db;color:white;padding:10px 25px;border-radius:6px;text-decoration:none;margin:10px}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>📊 Resultats des annotations</h1>
+<p style="text-align:center;color:#666">{{ total }} annotations enregistrees</p>
+{% if scores %}
+<table>
+<tr><th>Modele</th><th>Strategie</th><th>Langue</th>
+<th>Adequation</th><th>Fluidite</th><th>Score moyen</th></tr>
+{% for s in scores %}
+<tr>
+<td>{{ s.model }}</td><td>{{ s.strategy }}</td><td>{{ s.lang }}</td>
+<td>{{ s.adequacy }}/5</td><td>{{ s.fluency }}/5</td>
+<td class="{{ 'high' if s.score_moy >= 3.5 else 'low' }}">{{ s.score_moy }}/5</td>
+</tr>
+{% endfor %}
+</table>
+{% else %}
+<p style="text-align:center;color:#999">Aucune annotation encore.</p>
+{% endif %}
+<div style="text-align:center;margin-top:20px">
+<a href="/" class="btn">🏠 Accueil</a>
+<a href="/annotate/0" class="btn" style="background:#27ae60">▶ Continuer</a>
+</div>
+</div>
+</body>
+</html>

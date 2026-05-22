@@ -1,0 +1,66 @@
+[
+  {
+    "langue": "Lingala",
+    "modele": "llama3-8b",
+    "strategie": "zero_shot",
+    "BLEU": 0.0,
+    "chrF": 0.09,
+    "n_phrases": 210
+  },
+  {
+    "langue": "Lingala",
+    "modele": "llama3-8b",
+    "strategie": "few_shot",
+    "BLEU": 0.0,
+    "chrF": 0.68,
+    "n_phrases": 87
+  },
+  {
+    "langue": "Lingala",
+    "modele": "llama3-70b",
+    "strategie": "zero_shot",
+    "BLEU": 0.0,
+    "chrF": 0.19,
+    "n_phrases": 209
+  },
+  {
+    "langue": "Lingala",
+    "modele": "llama3-70b",
+    "strategie": "few_shot",
+    "BLEU": 0.0,
+    "chrF": 0.65,
+    "n_phrases": 8
+  },
+  {
+    "langue": "Bambara",
+    "modele": "llama3-8b",
+    "strategie": "zero_shot",
+    "BLEU": 0.0,
+    "chrF": 0.24,
+    "n_phrases": 210
+  },
+  {
+    "langue": "Bambara",
+    "modele": "llama3-8b",
+    "strategie": "few_shot",
+    "BLEU": 0.0,
+    "chrF": 0.29,
+    "n_phrases": 151
+  },
+  {
+    "langue": "Bambara",
+    "modele": "llama3-70b",
+    "strategie": "zero_shot",
+    "BLEU": 0.0,
+    "chrF": 0.33,
+    "n_phrases": 86
+  },
+  {
+    "langue": "Bambara",
+    "modele": "llama3-70b",
+    "strategie": "few_shot",
+    "BLEU": 0.0,
+    "chrF": 0.46,
+    "n_phrases": 8
+  }
+]
