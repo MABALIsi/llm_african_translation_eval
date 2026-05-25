@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM African Translation Eval</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background:#f0f4f8; color:#2d3748; }
+  header { background:linear-gradient(135deg,#1a365d,#2b6cb0);
+           color:white; padding:50px 20px; text-align:center; }
+  header h1 { font-size:2em; margin-bottom:10px; }
+  header p  { font-size:1.1em; opacity:0.9; }
+  .badge { display:inline-block; background:rgba(255,255,255,0.2);
+           padding:4px 12px; border-radius:20px; margin:5px;
+           font-size:0.85em; }
+  .container { max-width:900px; margin:0 auto; padding:30px 20px; }
+  .card { background:white; border-radius:12px; padding:25px;
+          margin:20px 0; box-shadow:0 2px 10px rgba(0,0,0,0.08); }
+  .card h2 { color:#2b6cb0; margin-bottom:15px; font-size:1.2em;
+             border-bottom:2px solid #bee3f8; padding-bottom:8px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+          gap:15px; margin:15px 0; }
+  .stat { background:#ebf8ff; border-radius:8px; padding:15px;
+          text-align:center; border-left:4px solid #2b6cb0; }
+  .stat h3 { font-size:2em; color:#2b6cb0; }
+  .stat p   { font-size:0.85em; color:#4a5568; margin-top:4px; }
+  table { width:100%; border-collapse:collapse; margin:15px 0; }
+  th { background:#2b6cb0; color:white; padding:10px; text-align:left; }
+  td { padding:9px 10px; border-bottom:1px solid #e2e8f0; }
+  tr:hover { background:#f7fafc; }
+  .bar-container { background:#e2e8f0; border-radius:10px; height:18px;
+                   overflow:hidden; }
+  .bar { background:linear-gradient(90deg,#2b6cb0,#63b3ed);
+         height:100%; border-radius:10px; transition:width 1s; }
+  .btn { display:inline-block; background:#2b6cb0; color:white;
+         padding:12px 28px; border-radius:8px; text-decoration:none;
+         font-size:1em; margin:8px; transition:background 0.2s; }
+  .btn:hover { background:#1a365d; }
+  .btn-green { background:#276749; }
+  .btn-green:hover { background:#1c4532; }
+  .step { display:flex; gap:15px; margin:12px 0; align-items:flex-start; }
+  .step-num { background:#2b6cb0; color:white; border-radius:50%;
+              width:30px; height:30px; display:flex; align-items:center;
+              justify-content:center; font-weight:bold; flex-shrink:0; }
+  code { background:#edf2f7; padding:2px 6px; border-radius:4px;
+         font-family:monospace; font-size:0.9em; }
+  pre  { background:#1a202c; color:#a0aec0; padding:15px;
+         border-radius:8px; overflow-x:auto; margin:10px 0; font-size:0.85em; }
+  footer { text-align:center; padding:30px; color:#718096;
+           font-size:0.9em; background:#e2e8f0; margin-top:20px; }
+  .tag { background:#bee3f8; color:#1a365d; padding:3px 10px;
+         border-radius:20px; font-size:0.8em; margin:3px; display:inline-block; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>&#127758; Evaluation des Traductions LLM</h1>
+  <p>Langues Africaines a Faibles Ressources : Lingala &amp; Bambara</p>
+  <br>
+  <span class="badge">&#127891; ENASTIC -- Licence 3 Informatique</span>
+  <span class="badge">&#128100; MABALI SINGA</span>
+  <span class="badge">&#128197; 2025-2026</span>
+</header>
+
+<div class="container">
+
+  <!-- STATS -->
+  <div class="card">
+    <h2>&#128202; Chiffres Cles du Projet</h2>
+    <div class="grid">
+      <div class="stat"><h3>2 000</h3><p>Phrases paralleles</p></div>
+      <div class="stat"><h3>969</h3><p>Traductions LLM</p></div>
+      <div class="stat"><h3>2</h3><p>Langues africaines</p></div>
+      <div class="stat"><h3>9</h3><p>Domaines thematiques</p></div>
+    </div>
+  </div>
+
+  <!-- RESULTATS -->
+  <div class="card">
+    <h2>&#127942; Resultats -- Score chrF par Modele</h2>
+    <table>
+      <tr>
+        <th>Langue</th><th>Modele</th><th>Strategie</th>
+        <th>Score chrF</th><th>Visualisation</th>
+      </tr>
+      <tr>
+        <td>Lingala</td><td>LLaMA-3-8b</td><td>few_shot</td><td><strong>0.68</strong></td>
+        <td><div class="bar-container"><div class="bar" style="width:68%"></div></div></td>
+      </tr>
+      <tr>
+        <td>Lingala</td><td>LLaMA-3-70b</td><td>few_shot</td><td>0.65</td>
+        <td><div class="bar-container"><div class="bar" style="width:65%"></div></div></td>
+      </tr>
+      <tr>
+        <td>Bambara</td><td>LLaMA-3-70b</td><td>few_shot</td><td>0.46</td>
+        <td><div class="bar-container"><div class="bar" style="width:46%"></div></div></td>
+      </tr>
+      <tr>
+        <td>Bambara</td><td>LLaMA-3-8b</td><td>zero_shot</td><td>0.24</td>
+        <td><div class="bar-container"><div class="bar" style="width:24%"></div></div></td>
+      </tr>
+    </table>
+    <p style="color:#718096;font-size:0.85em">
+      * BLEU = 0 car les references humaines ne sont pas encore completes.
+      chrF opere au niveau des caracteres et reste informatif.
+    </p>
+  </div>
+
+  <!-- PIPELINE -->
+  <div class="card">
+    <h2>&#9881;&#65039; Pipeline Technique</h2>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div><strong>Corpus</strong> -- 2000 phrases paralleles francais/lingala/bambara
+      (FLORES-200 + enrichissement manuel en 9 domaines)</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div><strong>Traduction</strong> -- LLaMA-3-8b et LLaMA-3-70b via API Groq
+      (zero-shot et few-shot)</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div><strong>Evaluation auto</strong> -- Metriques BLEU et chrF
+      avec <code>sacrebleu</code></div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div><strong>Annotation humaine</strong> -- Interface web Flask
+      (adequation + fluidite, 1-5 etoiles)</div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div><strong>Publication</strong> -- Code source et resultats sur GitHub</div>
+    </div>
+  </div>
+
+  <!-- TECHNOLOGIES -->
+  <div class="card">
+    <h2>&#128295; Technologies Utilisees</h2>
+    <span class="tag">Python 3.10</span>
+    <span class="tag">Jupyter Notebook</span>
+    <span class="tag">Flask</span>
+    <span class="tag">HuggingFace Datasets</span>
+    <span class="tag">sacrebleu</span>
+    <span class="tag">API Groq</span>
+    <span class="tag">LLaMA-3</span>
+    <span class="tag">Anaconda</span>
+    <span class="tag">Git / GitHub</span>
+    <span class="tag">Pandas</span>
+  </div>
+
+  <!-- INSTALLATION -->
+  <div class="card">
+    <h2>&#128187; Installer et Executer le Projet</h2>
+    <pre>
+# 1. Cloner le depot
+git clone https://github.com/MABALIsi/llm_african_translation_eval.git
+cd llm_african_translation_eval
+
+# 2. Creer l'environnement
+conda create -n llm_african_translation python=3.10 -y
+conda activate llm_african_translation
+pip install -r requirements.txt
+
+# 3. Lancer Jupyter
+jupyter notebook
+
+# 4. Lancer l'interface web
+cd interface
+python app.py
+# Ouvrir http://localhost:5000
+    </pre>
+  </div>
+
+  <!-- BOUTONS -->
+  <div style="text-align:center; margin:30px 0;">
+    <a href="https://github.com/MABALIsi/llm_african_translation_eval"
+       class="btn" target="_blank">
+      &#128196; Voir le Code Source
+    </a>
+    <a href="https://github.com/MABALIsi/llm_african_translation_eval/tree/main/results"
+       class="btn btn-green" target="_blank">
+      &#128202; Voir les Resultats
+    </a>
+  </div>
+
+</div>
+
+<footer>
+  <strong>MABALI SINGA</strong> -- ENASTIC, Licence 3 Informatique -- 2025/2026<br>
+  Encadrant : MOUAZ MICKAIL &nbsp;|&nbsp;
+  <a href="https://github.com/MABALIsi/llm_african_translation_eval"
+     style="color:#2b6cb0">GitHub Repository</a>
+</footer>
+
+</body>
+</html>
